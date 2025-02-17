@@ -1,17 +1,29 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Pantry Aid App!"/>
+  <div id="app">
+    <h1>Welcome to Pantry Aid</h1>
+    <p v-if="loading">Loading...</p>
+    <p v-else>{{ message }}</p>
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+<script setup>
+import { ref, onMounted } from 'vue';
+import api from './api.js'; // Ensure you create this file
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+const message = ref('');
+const loading = ref(true);
+
+onMounted(async () => {
+  try {
+    const response = await api.get('/hello');
+    message.value = response.data;
+  } catch (error) {
+    message.value = 'Failed to connect to backend';
+    console.error('Error:', error);
+  } finally {
+    loading.value = false;
   }
-}
+});
 </script>
 
 <style>
@@ -24,3 +36,4 @@ export default {
   margin-top: 60px;
 }
 </style>
+
