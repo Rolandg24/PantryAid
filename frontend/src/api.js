@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api', // Adjust if needed
+  baseURL: '/api', // This ensures Vite forwards the request to the backend
   headers: {
     'Content-Type': 'application/json'
   }
